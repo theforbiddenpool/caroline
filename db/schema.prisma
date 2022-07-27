@@ -15,3 +15,11 @@ model User {
 
   @@map(name: "users")
 }
+
+model Food {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  quantity Int
+
+  @@map(name: "foods")
+}
