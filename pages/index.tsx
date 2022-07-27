@@ -1,4 +1,6 @@
+import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import prisma from '../db/prisma';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -6,7 +8,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   day: 'numeric',
 };
 
-function Home() {
+function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -22,22 +24,36 @@ function Home() {
             <span>{(new Date()).toLocaleDateString('en-US', dateOptions)}</span>
             <button type="button" className="mx-2" aria-label="next">&gt;</button>
           </nav>
-          <div className="flex bg-zinc-50 p-5">
-            <h3 className="flex-grow">Beans</h3>
-            <div>
-              <span>
-                <button type="button" aria-label="decrement">-</button>
-                <input type="number" step="0.5" className="w-14 mx-3 text-center" aria-label="servings" />
-                <button type="button" aria-label="increment">+</button>
-              </span>
-              <span className="mx-4">&#47;</span>
-              <span>3</span>
+          {foods?.map((food) => (
+            <div className="flex bg-zinc-50 p-5">
+              <h3 className="flex-grow">{food.name}</h3>
+              <div>
+                <span>
+                  <button type="button" aria-label="decrement">-</button>
+                  <input type="number" step="0.5" className="w-14 mx-3 text-center" aria-label="servings" />
+                  <button type="button" aria-label="increment">+</button>
+                </span>
+                <span className="mx-4">&#47;</span>
+                <span>{food.quantity}</span>
+              </div>
             </div>
-          </div>
+          ))}
         </main>
       </div>
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  const foods = await prisma.food.findMany({
+    orderBy: { order_weight: 'asc' },
+  });
+
+  return {
+    props: {
+      foods,
+    },
+  };
+};
 
 export default Home;
