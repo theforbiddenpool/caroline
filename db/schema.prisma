@@ -17,9 +17,10 @@ model User {
 }
 
 model Food {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
-  quantity Int
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  quantity     Int
+  order_weight Int
 
   @@map(name: "foods")
 }
