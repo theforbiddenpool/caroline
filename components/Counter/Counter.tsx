@@ -42,6 +42,24 @@ function Counter({ total }: CounterProps) {
     setServing(value);
   }
 
+  function handleKeypress(e: React.KeyboardEvent<HTMLInputElement>) {
+    switch (e.key) {
+      case 'ArrowUp':
+        handleIncrement();
+        break;
+      case 'ArrowDown':
+        handleDecrement();
+        break;
+      case 'Home':
+        setServing('0');
+        break;
+      case 'End':
+        setServing('100');
+        break;
+      default:
+    }
+  }
+
   return (
     <div>
       <span>
@@ -53,8 +71,11 @@ function Counter({ total }: CounterProps) {
           inputMode="decimal"
           value={serving}
           onChange={handleChange}
+          onKeyDown={handleKeypress}
           className="w-14 mx-3 text-center border-2 border-gray-900"
+          role="spinbutton"
           aria-label="servings"
+          aria-valuenow={parseFloat(serving)}
         />
         <button type="button" onClick={handleIncrement} aria-label="increment">
           <IconPlus size={13} role="presentation" />
