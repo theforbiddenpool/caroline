@@ -1,5 +1,8 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import {
+  IconMinusVertical, IconPlus, IconMinus, IconChevronLeft, IconChevronRight,
+} from '@tabler/icons';
 import prisma from '../db/prisma';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
@@ -20,20 +23,20 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
         <h1 className="text-6xl font-medium text-center">Caroline</h1>
         <main className="w-3/5 mt-10 bg-gray-100">
           <nav className="text-right p-3">
-            <button type="button" className="mx-2" aria-label="previous">&lt;</button>
+            <button type="button" className="mx-2 align-middle" aria-label="previous"><IconChevronLeft size={15} className="" role="presentation" /></button>
             <span>{(new Date()).toLocaleDateString('en-US', dateOptions)}</span>
-            <button type="button" className="mx-2" aria-label="next">&gt;</button>
+            <button type="button" className="mx-2 align-middle" aria-label="next"><IconChevronRight size={15} className="align-bottom" role="presentation" /></button>
           </nav>
           {foods?.map((food) => (
             <div className="flex bg-zinc-50 p-5" key={food.id}>
               <h3 className="flex-grow">{food.name}</h3>
               <div>
                 <span>
-                  <button type="button" aria-label="decrement">-</button>
-                  <input type="number" step="0.5" className="w-14 mx-3 text-center" aria-label="servings" />
-                  <button type="button" aria-label="increment">+</button>
+                  <button type="button" aria-label="decrement"><IconMinus size={13} role="presentation" /></button>
+                  <input type="number" step="0.5" className="w-14 mx-3 text-center border-2 border-gray-900" aria-label="servings" />
+                  <button type="button" aria-label="increment"><IconPlus size={13} role="presentation" /></button>
                 </span>
-                <span className="mx-4">&#47;</span>
+                <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
                 <span>{food.quantity}</span>
               </div>
             </div>
