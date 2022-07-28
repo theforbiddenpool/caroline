@@ -21,7 +21,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
       <div className="flex flex-col items-center p-8 h-screen">
         <h1 className="text-6xl font-medium text-center">Caroline</h1>
         <main className="w-3/5 mt-10 bg-gray-100">
-          <nav className="text-right p-3">
+          <nav className="text-right p-3 bg-lime-200">
             <button type="button" className="mx-2 align-middle" aria-label="previous"><IconChevronLeft size={15} className="" role="presentation" /></button>
             <span>{(new Date()).toLocaleDateString('en-US', dateOptions)}</span>
             <button type="button" className="mx-2 align-middle" aria-label="next"><IconChevronRight size={15} className="align-bottom" role="presentation" /></button>
