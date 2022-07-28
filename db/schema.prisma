@@ -8,10 +8,19 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  createdAt DateTime? @default(now()) @map(name: "created_at")
+  updatedAt DateTime? @updatedAt @map(name: "updated_at")
 
   @@map(name: "users")
+}
+
+model Food {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  quantity     Int
+  order_weight Int?
+
+  @@map(name: "foods")
 }
