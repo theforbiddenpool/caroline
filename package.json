@@ -46,6 +46,6 @@
   },
   "prisma": {
     "schema": "db/schema.prisma",
-    "seed": "yarn ts-node db/seed.ts"
+    "seed": "yarn ts-node db/seeds/index.ts"
   }
 }

@@ -1,15 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-interface FoodsBase {
-  name: string;
-  quantity: number;
-  order_weight: number;
-}
+import { Food } from '@prisma/client';
 
-export interface Foods extends FoodsBase {
-  id: number;
-}
-
-export const foods: FoodsBase[] = [
+export const foods: Omit<Food, 'id'>[] = [
   {
     name: 'beans',
     quantity: 3,
