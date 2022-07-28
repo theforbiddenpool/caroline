@@ -8,6 +8,24 @@ interface CounterProps {
 function Counter({ total }: CounterProps) {
   const [serving, setServing] = useState<number | ''>('');
 
+  function handleIncrement() {
+    const nextValue = (serving === '') ? 0.5 : serving + 0.5;
+    setServing(nextValue);
+  }
+
+  function handleDecrement() {
+    let nextValue: number;
+
+    if (serving === '') {
+      nextValue = 0;
+    } else {
+      const result = serving - 0.5;
+      nextValue = (result < 0) ? 0 : result;
+    }
+
+    setServing(nextValue);
+  }
+
   function handleKeypress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Backspace' || e.key === 'Delete') {
       if (String(serving).length === 1) {
@@ -29,7 +47,9 @@ function Counter({ total }: CounterProps) {
   return (
     <div>
       <span>
-        <button type="button" aria-label="decrement"><IconMinus size={13} role="presentation" /></button>
+        <button type="button" onClick={handleDecrement} aria-label="decrement">
+          <IconMinus size={13} role="presentation" />
+        </button>
         <input
           type="number"
           value={serving}
@@ -39,7 +59,9 @@ function Counter({ total }: CounterProps) {
           className="w-14 mx-3 text-center border-2 border-gray-900"
           aria-label="servings"
         />
-        <button type="button" aria-label="increment"><IconPlus size={13} role="presentation" /></button>
+        <button type="button" onClick={handleIncrement} aria-label="increment">
+          <IconPlus size={13} role="presentation" />
+        </button>
       </span>
       <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
       <span>{total}</span>
