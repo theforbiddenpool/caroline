@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
 import { IconMinus, IconMinusVertical, IconPlus } from '@tabler/icons';
 
+const NUMBER_REGEX = /^\d+\.?\d*$/;
+
 interface CounterProps {
   total: number;
 }
 
 function Counter({ total }: CounterProps) {
-  const [serving, setServing] = useState<number | ''>('');
+  const [serving, setServing] = useState<string>('');
 
   function handleIncrement() {
-    const nextValue = (serving === '') ? 0.5 : serving + 0.5;
-    setServing(nextValue);
+    const parsed = parseFloat(serving);
+
+    const nextValue = (serving === '') ? 0.5 : parsed + 0.5;
+    setServing(nextValue.toString());
   }
 
   function handleDecrement() {
+    const parsed = parseFloat(serving);
+
     let nextValue: number;
 
     if (serving === '') {
       nextValue = 0;
     } else {
-      const result = serving - 0.5;
+      const result = parsed - 0.5;
       nextValue = (result < 0) ? 0 : result;
     }
 
-    setServing(nextValue);
-  }
-
-  function handleKeypress(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-      if (String(serving).length === 1) {
-        setServing('');
-      } else {
-        setServing(Number(e.currentTarget.value));
-      }
-    }
-
-    if (/\b[a-z]\b/i.test(e.key)) {
-      e.preventDefault();
-    }
+    setServing(nextValue.toString());
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setServing(Number(e.currentTarget.value));
+    const { value } = e.currentTarget;
+
+    if (value === '') setServing('');
+    if (value === '.') setServing(`0${value}`);
+    if (!NUMBER_REGEX.test(value)) return;
+
+    setServing(value);
   }
 
   return (
@@ -51,11 +49,10 @@ function Counter({ total }: CounterProps) {
           <IconMinus size={13} role="presentation" />
         </button>
         <input
-          type="number"
+          type="text"
+          inputMode="decimal"
           value={serving}
           onChange={handleChange}
-          onKeyDown={handleKeypress}
-          step="0.5"
           className="w-14 mx-3 text-center border-2 border-gray-900"
           aria-label="servings"
         />
