@@ -1,11 +1,15 @@
 /* eslint-disable import/prefer-default-export */
-interface Foods {
+interface FoodsBase {
   name: string;
   quantity: number;
   order_weight: number;
 }
 
-export const foods: Foods[] = [
+export interface Foods extends FoodsBase {
+  id: number;
+}
+
+export const foods: FoodsBase[] = [
   {
     name: 'beans',
     quantity: 3,

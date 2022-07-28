@@ -25,7 +25,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
             <button type="button" className="mx-2" aria-label="next">&gt;</button>
           </nav>
           {foods?.map((food) => (
-            <div className="flex bg-zinc-50 p-5">
+            <div className="flex bg-zinc-50 p-5" key={food.id}>
               <h3 className="flex-grow">{food.name}</h3>
               <div>
                 <span>
