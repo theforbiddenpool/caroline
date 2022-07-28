@@ -3,7 +3,7 @@ import Head from 'next/head';
 import {
   IconMinusVertical, IconPlus, IconMinus, IconChevronLeft, IconChevronRight,
 } from '@tabler/icons';
-import prisma from '../db/prisma';
+import { loadFoods } from './api/foods';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -48,15 +48,13 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
 }
 
 export const getStaticProps = async () => {
-  const foods = await prisma.food.findMany({
-    orderBy: { order_weight: 'asc' },
-  });
+  try {
+    const foods = await loadFoods();
 
-  return {
-    props: {
-      foods,
-    },
-  };
+    return { props: { foods } };
+  } catch (err) {
+    return { props: { foods: [] }, notFound: true };
+  }
 };
 
 export default Home;
