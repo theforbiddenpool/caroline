@@ -1,9 +1,8 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
-import {
-  IconMinusVertical, IconPlus, IconMinus, IconChevronLeft, IconChevronRight,
-} from '@tabler/icons';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons';
 import { loadFoods } from './api/foods';
+import { Counter } from '../components';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -30,15 +29,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
           {foods?.map((food) => (
             <div className="flex bg-zinc-50 p-5" key={food.id}>
               <h3 className="flex-grow capitalize">{food.name}</h3>
-              <div>
-                <span>
-                  <button type="button" aria-label="decrement"><IconMinus size={13} role="presentation" /></button>
-                  <input type="number" step="0.5" className="w-14 mx-3 text-center border-2 border-gray-900" aria-label="servings" />
-                  <button type="button" aria-label="increment"><IconPlus size={13} role="presentation" /></button>
-                </span>
-                <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
-                <span>{food.quantity}</span>
-              </div>
+              <Counter total={food.quantity} />
             </div>
           ))}
         </main>
