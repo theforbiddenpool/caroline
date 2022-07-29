@@ -1,8 +1,11 @@
 export function formatDate(date: Date, options?: Intl.DateTimeFormatOptions) {
+  const isCurrentYear = (new Date()).getFullYear() === date.getFullYear();
+
   const dateOptions = options || {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
+    ...(!isCurrentYear && { year: 'numeric' }),
   };
 
   return date.toLocaleDateString('en-US', dateOptions);
