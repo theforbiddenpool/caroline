@@ -11,5 +11,6 @@ export default NextAuth({
       from: process.env.EMAIL_FROM,
     }),
   ],
+  secret: process.env.SECRET,
   debug: true,
 });
