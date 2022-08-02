@@ -18,6 +18,9 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': [2, {
       assert: 'either',
     }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.test.ts", "**/*.test.tsx", "jest.*", "mocks/**"]
+    }]
   },
   ignorePatterns: [".eslintrc.js"],
 };
