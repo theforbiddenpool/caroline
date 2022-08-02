@@ -13,7 +13,6 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
       </Head>
       <div className="flex flex-col items-center pb-8 min-h-screen">
         <Header />
-        <h1 className="text-6xl font-medium text-center">Caroline</h1>
         <main className="w-3/5 mt-10 bg-gray-100">
           <DateSelector />
           {foods?.map((food) => (

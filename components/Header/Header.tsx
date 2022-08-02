@@ -5,9 +5,17 @@ function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="w-full bg-lime-300 mb-10">
+    <header className="w-full flex items-center bg-lime-300 p-5 mb-10">
+      <h1 className="text-3xl font-medium flex-grow">Caroline</h1>
+      {session?.user && (
+      <p className="mr-4">
+        Signed in as
+        {' '}
+        {session.user.name ?? session.user.email}
+      </p>
+      )}
       <nav>
-        <ul className="flex justify-end p-5">
+        <ul>
           {!session && (
           <li>
             <Link
@@ -19,7 +27,6 @@ function Header() {
             >
               Sign In
             </Link>
-
           </li>
           )}
 
@@ -34,7 +41,6 @@ function Header() {
             >
               Logout
             </Link>
-
           </li>
           )}
         </ul>
