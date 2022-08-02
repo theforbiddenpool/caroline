@@ -1,7 +1,7 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { loadFoods } from './api/foods';
-import { Counter, DateSelector } from '../components';
+import { Counter, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
@@ -11,7 +11,8 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
         <meta name="description" content="The web version of the Dr. Greger's app Daily Dozen, which helps you track if you getting enough servings of the healthiest foods" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col items-center p-8 min-h-screen">
+      <div className="flex flex-col items-center pb-8 min-h-screen">
+        <Header />
         <h1 className="text-6xl font-medium text-center">Caroline</h1>
         <main className="w-3/5 mt-10 bg-gray-100">
           <DateSelector />
