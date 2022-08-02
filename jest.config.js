@@ -1,10 +1,14 @@
-module.exports = {
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+const config = {
   clearMocks: true,
   coverageDirectory: '.coverage',
-  moduleNameMapper: {
-    '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules',
-  },
-  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
   setupFilesAfterEnv: ['./jest.setup.js'],
   testEnvironment: 'jsdom',
 };
+
+module.exports = createJestConfig(config);
