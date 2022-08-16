@@ -1,9 +1,13 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
+import { IconAlertTriangle } from '@tabler/icons';
 import { loadFoods } from './api/foods';
 import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
+  const { data: session, status } = useSession();
+
   return (
     <>
       <Head>
@@ -13,7 +17,14 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
       </Head>
       <div className="flex flex-col items-center pb-8 min-h-screen">
         <Header />
-        <main className="w-3/5 mt-10 bg-gray-100">
+        <main className="w-3/5 mt-10">
+          {!session && status !== 'loading' && (
+            <div className="px-3 py-5 mb-5 bg-red-400 text-center">
+              <IconAlertTriangle className="inline-block mr-1 align-text-bottom" size={18} />
+              {' '}
+              You&apos;re currently not signed in. No data will be saved!
+            </div>
+          )}
           <DateSelector />
           {foods?.map((food) => (
             <Nutriment data={food} key={food.id} />
