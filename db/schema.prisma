@@ -61,7 +61,7 @@ model VerificationToken {
 }
 
 model Food {
-  id           Int    @id @default(autoincrement())
+  id           String @id @default(cuid())
   name         String @unique
   quantity     Int
   order_weight Int?
