@@ -1,7 +1,7 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { loadFoods } from './api/foods';
-import { Counter, DateSelector, Header } from '../components';
+import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   return (
@@ -16,10 +16,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
         <main className="w-3/5 mt-10 bg-gray-100">
           <DateSelector />
           {foods?.map((food) => (
-            <div className="flex bg-zinc-50 p-5" key={food.id}>
-              <h3 className="flex-grow capitalize">{food.name}</h3>
-              <Counter total={food.quantity} />
-            </div>
+            <Nutriment data={food} key={food.id} />
           ))}
         </main>
       </div>
