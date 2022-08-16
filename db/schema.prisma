@@ -45,6 +45,7 @@ model User {
   image         String?
   createdAt     DateTime? @default(now()) @map(name: "created_at")
   updatedAt     DateTime? @updatedAt @map(name: "updated_at")
+  servings      Servings[]
   accounts      Account[]
   sessions      Session[]
 
@@ -65,6 +66,19 @@ model Food {
   name         String @unique
   quantity     Int
   order_weight Int?
+  servings     Servings[]
 
   @@map(name: "foods")
+}
+
+model Servings {
+  id String @id @default(cuid())
+  userId String @map("user_id")
+  foodId String @map("food_id")
+  date DateTime
+  quantity Float?
+  user User @relation(fields: [userId], references: [id])
+  food Food @relation(fields: [foodId], references: [id])
+
+  @@map("servings")
 }
