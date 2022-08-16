@@ -1,5 +1,5 @@
 import { Food } from '@prisma/client';
-import Counter from '../Counter/Counter';
+import Counter from './Counter/Counter';
 
 interface FoodProps {
   data: Food
