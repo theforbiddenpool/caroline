@@ -38,13 +38,13 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
   image         String?
-  createdAt     DateTime? @default(now()) @map(name: "created_at")
-  updatedAt     DateTime? @updatedAt @map(name: "updated_at")
+  createdAt     DateTime?  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime?  @updatedAt @map(name: "updated_at")
   servings      Servings[]
   accounts      Account[]
   sessions      Session[]
@@ -62,8 +62,8 @@ model VerificationToken {
 }
 
 model Food {
-  id           String @id @default(cuid())
-  name         String @unique
+  id           String     @id @default(cuid())
+  name         String     @unique
   quantity     Int
   order_weight Int?
   servings     Servings[]
@@ -72,13 +72,13 @@ model Food {
 }
 
 model Servings {
-  id String @id @default(cuid())
-  userId String @map("user_id")
-  foodId String @map("food_id")
-  date DateTime
+  id       String   @id @default(cuid())
+  userId   String   @map("user_id")
+  foodId   String   @map("food_id")
+  date     DateTime
   quantity Float?
-  user User @relation(fields: [userId], references: [id])
-  food Food @relation(fields: [foodId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  food     Food     @relation(fields: [foodId], references: [id])
 
   @@map("servings")
 }
