@@ -81,4 +81,5 @@ model Servings {
   food     Food     @relation(fields: [foodId], references: [id])
 
   @@map("servings")
+  @@unique([userId, foodId, date])
 }
