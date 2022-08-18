@@ -1,12 +1,25 @@
 import { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { Servings } from '@prisma/client';
 import { IconAlertTriangle } from '@tabler/icons';
 import { loadFoods } from './api/foods';
 import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const { data: session, status } = useSession();
+  const [servings, setServings] = useState<Servings[]>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedServings = await fetch(`/api/servings?${new URLSearchParams({
+        date: (new Date()).toUTCString(),
+      })}`).then((res) => res.json());
+      setServings(fetchedServings);
+      console.log('fetch call finished');
+    })();
+  }, []);
 
   return (
     <>
@@ -27,7 +40,11 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
           )}
           <DateSelector />
           {foods?.map((food) => (
-            <Nutriment data={food} key={food.id} />
+            <Nutriment
+              data={food}
+              serving={servings?.filter((s) => s.foodId === food.id)}
+              key={food.id}
+            />
           ))}
         </main>
       </div>

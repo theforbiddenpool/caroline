@@ -1,15 +1,16 @@
-import { Food } from '@prisma/client';
+import type { Food, Servings } from '@prisma/client';
 import Counter from './Counter/Counter';
 
 interface NutrimentProps {
-  data: Food
+  data: Food;
+  serving?: Servings[]
 }
 
-function Nutriment({ data }: NutrimentProps) {
+function Nutriment({ data, serving }: NutrimentProps) {
   return (
     <div className="flex bg-zinc-50 p-5">
       <h3 className="flex-grow capitalize">{data.name}</h3>
-      <Counter total={data.quantity} />
+      <Counter initialValue={serving?.[0]?.quantity} total={data.quantity} />
     </div>
   );
 }

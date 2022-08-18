@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconMinusVertical } from '@tabler/icons';
 import CounterInput from './CounterInput';
 
 interface CounterProps {
+  initialValue?: string | null;
   total: number;
 }
 
-function Counter({ total }: CounterProps) {
+function Counter({ initialValue, total }: CounterProps) {
   const [serving, setServing] = useState<string>('');
+
+  useEffect(() => {
+    setServing(initialValue ?? '');
+  }, [initialValue]);
 
   return (
     <div>
