@@ -8,23 +8,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET': {
       const session = await unstable_getServerSession(req, res, authOptions);
+
       if (!session || !session.user) {
         res.status(401).json({ error: 'You must be logged in.' });
         return;
       }
 
       try {
-        const date = req.query.date && new Date(String(req.query.date));
+        const date = typeof req.query.date === 'string' ? new Date(req.query.date) : undefined;
+        const dateMin = date && new Date(date.setUTCHours(0, 0, 0, 0));
+        const dateMax = date && new Date(date.setUTCHours(23, 59, 59, 999));
 
         const servings = await prisma.servings.findMany({
           where: {
             userId: session.user.id,
-            ...(date && { date }),
+            ...(date && {
+              date: {
+                lte: dateMax,
+                gte: dateMin,
+              },
+            }),
+          },
+          select: {
+            id: true,
+            foodId: true,
+            date: true,
+            quantity: true,
           },
         });
 
         res.status(200).json(servings);
       } catch (err) {
+        console.error(err);
         res.status(500).json({ error: err });
       }
       break;
