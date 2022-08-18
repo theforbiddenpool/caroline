@@ -8,13 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET': {
       const session = await unstable_getServerSession(req, res, authOptions);
-
-      if (!session) {
+      if (!session || !session.user) {
         res.status(401).json({ error: 'You must be logged in.' });
-      }
-
-      if (!session?.user) {
-        throw new Error('User is missing');
+        return;
       }
 
       try {
@@ -36,12 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'PUT': {
       const session = await unstable_getServerSession(req, res, authOptions);
 
-      if (!session) {
+      if (!session || !session.user) {
         res.status(401).json({ error: 'You must be logged in.' });
-      }
-
-      if (!session?.user) {
-        throw new Error('User is missing');
+        return;
       }
 
       try {
