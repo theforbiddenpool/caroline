@@ -1,18 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
-class PrismaClientSingleton {
-  private static instance: PrismaClient;
+const prisma = global.prisma || new PrismaClient({
+  log: ['warn'],
+});
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
 
-  public static prisma(): PrismaClient {
-    if (!PrismaClientSingleton.instance) {
-      PrismaClientSingleton.instance = new PrismaClient();
-    }
-
-    return PrismaClientSingleton.instance;
-  }
-}
-
-export default PrismaClientSingleton.prisma();
+export default prisma;
