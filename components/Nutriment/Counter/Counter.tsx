@@ -20,6 +20,11 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
 
   const handleServing = (value: string) => {
     (async () => {
+      if (value.endsWith('.')) {
+        setServing(value);
+        return;
+      }
+
       setDisabled(true);
       const updated = await updateServing({
         foodId: props.foodId,
