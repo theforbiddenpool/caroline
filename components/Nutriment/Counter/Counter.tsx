@@ -3,7 +3,7 @@ import { IconMinusVertical } from '@tabler/icons';
 import CounterInput from './CounterInput';
 
 interface CounterProps {
-  initialValue?: string | null;
+  initialValue?: string;
   total: number;
 }
 

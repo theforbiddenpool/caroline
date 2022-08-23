@@ -1,6 +1,6 @@
-import type { Servings } from '../../types';
+import type { Serving } from '../../types';
 
-export async function getServings(date: Date): Promise<Servings[]> {
+export async function getServings(date: Date): Promise<Serving[]> {
   const query = new URLSearchParams({
     date: date.toISOString(),
   });

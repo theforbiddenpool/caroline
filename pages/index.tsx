@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { IconAlertTriangle } from '@tabler/icons';
-import type { Servings } from '../types';
+import type { Serving } from '../types';
 import { loadFoods } from './api/foods';
 import { getServings } from '../services/client/servings';
 import { Nutriment, DateSelector, Header } from '../components';
@@ -11,7 +11,7 @@ import { Nutriment, DateSelector, Header } from '../components';
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const { data: session, status } = useSession();
   const [date, setDate] = useState(new Date());
-  const [servings, setServings] = useState<Servings[]>();
+  const [servings, setServings] = useState<Serving[]>();
 
   useEffect(() => {
     (async () => {
@@ -41,7 +41,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
           {foods?.map((food) => (
             <Nutriment
               data={food}
-              serving={servings?.filter((s) => s.foodId === food.id)}
+              serving={servings?.filter((s) => s.foodId === food.id)[0]}
               key={food.id}
             />
           ))}

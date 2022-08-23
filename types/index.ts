@@ -1,3 +1,5 @@
-import { Servings as PrismaServings } from '@prisma/client';
+import type { Servings as PrismaServings } from '@prisma/client';
 
-export type Servings = Omit<PrismaServings, 'userId'>;
+export type Serving = Omit<PrismaServings, 'userId' | 'quantity'> & {
+  quantity: string
+};
