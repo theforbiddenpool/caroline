@@ -74,7 +74,7 @@ function CounterInput({ value, setValue, disabled = false }: CounterInputProps) 
         className="w-14 mx-3 text-center border-2 border-gray-900"
         role="spinbutton"
         aria-label="servings"
-        aria-valuenow={parseFloat(value)}
+        aria-valuenow={value === '' ? 0 : parseFloat(value)}
       />
       <button type="button" onClick={handleIncrement} aria-label="increment" disabled={disabled}>
         <IconPlus size={13} role="presentation" />
