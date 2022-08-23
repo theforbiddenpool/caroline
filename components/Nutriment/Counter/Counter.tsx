@@ -12,6 +12,7 @@ interface CounterProps {
 
 function Counter({ initialValue, total, ...props }: CounterProps) {
   const [serving, setServing] = useState<string>('');
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     setServing(initialValue ?? '');
@@ -19,6 +20,7 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
 
   const handleServing = (value: string) => {
     (async () => {
+      setDisabled(true);
       const updated = await updateServing({
         foodId: props.foodId,
         date: props.date,
@@ -26,12 +28,13 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
       });
 
       setServing(updated.quantity);
+      setDisabled(false);
     })();
   };
 
   return (
     <div>
-      <CounterInput value={serving} setValue={handleServing} />
+      <CounterInput value={serving} setValue={handleServing} disabled={disabled} />
       <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
       <span>{total}</span>
     </div>

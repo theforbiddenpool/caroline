@@ -5,9 +5,10 @@ const NUMBER_REGEX = /^\d+\.?\d*$/;
 interface CounterInputProps {
   value: string;
   setValue: (value: string) => void;
+  disabled?: boolean;
 }
 
-function CounterInput({ value, setValue }: CounterInputProps) {
+function CounterInput({ value, setValue, disabled = false }: CounterInputProps) {
   function handleIncrement() {
     const parsed = parseFloat(value);
 
@@ -60,13 +61,14 @@ function CounterInput({ value, setValue }: CounterInputProps) {
 
   return (
     <span>
-      <button type="button" onClick={handleDecrement} aria-label="decrement">
+      <button type="button" onClick={handleDecrement} aria-label="decrement" disabled={disabled}>
         <IconMinus size={13} role="presentation" />
       </button>
       <input
         type="text"
         inputMode="decimal"
         value={value}
+        disabled={disabled}
         onChange={handleChange}
         onKeyDown={handleKeypress}
         className="w-14 mx-3 text-center border-2 border-gray-900"
@@ -74,7 +76,7 @@ function CounterInput({ value, setValue }: CounterInputProps) {
         aria-label="servings"
         aria-valuenow={parseFloat(value)}
       />
-      <button type="button" onClick={handleIncrement} aria-label="increment">
+      <button type="button" onClick={handleIncrement} aria-label="increment" disabled={disabled}>
         <IconPlus size={13} role="presentation" />
       </button>
     </span>
