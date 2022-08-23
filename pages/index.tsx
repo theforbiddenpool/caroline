@@ -9,17 +9,17 @@ import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const { data: session, status } = useSession();
+  const [date, setDate] = useState(new Date());
   const [servings, setServings] = useState<Servings[]>();
 
   useEffect(() => {
     (async () => {
       const fetchedServings = await fetch(`/api/servings?${new URLSearchParams({
-        date: (new Date()).toUTCString(),
+        date: date.toISOString(),
       })}`).then((res) => res.json());
       setServings(fetchedServings);
-      console.log('fetch call finished');
     })();
-  }, []);
+  }, [date]);
 
   return (
     <>
@@ -38,7 +38,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
               You&apos;re currently not signed in. No data will be saved!
             </div>
           )}
-          <DateSelector />
+          <DateSelector date={date} setDate={setDate} />
           {foods?.map((food) => (
             <Nutriment
               data={food}
