@@ -41,6 +41,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
           {foods?.map((food) => (
             <Nutriment
               data={food}
+              date={date}
               serving={servings?.filter((s) => s.foodId === food.id)[0]}
               key={food.id}
             />

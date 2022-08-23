@@ -4,10 +4,11 @@ import Counter from './Counter/Counter';
 
 interface NutrimentProps {
   data: Food;
+  date: Date;
   serving?: Serving
 }
 
-function Nutriment({ data, serving }: NutrimentProps) {
+function Nutriment({ data, date, serving }: NutrimentProps) {
   return (
     <div className="flex bg-zinc-50 p-5">
       <h3 className="flex-grow capitalize">{data.name}</h3>
@@ -15,7 +16,7 @@ function Nutriment({ data, serving }: NutrimentProps) {
         initialValue={serving?.quantity}
         total={data.quantity}
         foodId={data.id}
-        date={serving?.date}
+        date={date}
       />
     </div>
   );

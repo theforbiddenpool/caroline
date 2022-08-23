@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { IconMinusVertical } from '@tabler/icons';
 import CounterInput from './CounterInput';
+import { updateServing } from '../../../services/client/servings';
 
 interface CounterProps {
   initialValue?: string;
   total: number;
   foodId: string;
-  date?: Date;
+  date: Date;
 }
 
 function Counter({ initialValue, total, ...props }: CounterProps) {
@@ -16,32 +17,21 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
     setServing(initialValue ?? '');
   }, [initialValue]);
 
-  const updateServing = (value: string) => {
-    if (!props.date) return;
-
+  const handleServing = (value: string) => {
     (async () => {
-      const updated = await fetch('/api/servings', {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          foodId: props.foodId,
-          date: props.date,
-          quantity: value,
-        }),
+      const updated = await updateServing({
+        foodId: props.foodId,
+        date: props.date,
+        quantity: value,
       });
-      const json = await updated.json();
 
-      console.log(json);
-      setServing(json.quantity);
+      setServing(updated.quantity);
     })();
   };
 
   return (
     <div>
-      <CounterInput value={serving} setValue={updateServing} />
+      <CounterInput value={serving} setValue={handleServing} />
       <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
       <span>{total}</span>
     </div>
