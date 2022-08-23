@@ -1,4 +1,4 @@
-import { Servings } from '@prisma/client';
+import type { Servings } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { unstable_getServerSession } from 'next-auth/next';
 import prisma from '../../db/prisma';

@@ -1,10 +1,11 @@
-import { InferGetServerSidePropsType } from 'next';
+import type { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Servings } from '@prisma/client';
 import { IconAlertTriangle } from '@tabler/icons';
+import type { Servings } from '../types';
 import { loadFoods } from './api/foods';
+import { getServings } from '../services/client/servings';
 import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
@@ -14,9 +15,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
 
   useEffect(() => {
     (async () => {
-      const fetchedServings = await fetch(`/api/servings?${new URLSearchParams({
-        date: date.toISOString(),
-      })}`).then((res) => res.json());
+      const fetchedServings = await getServings(date);
       setServings(fetchedServings);
     })();
   }, [date]);

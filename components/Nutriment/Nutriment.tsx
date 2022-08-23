@@ -1,4 +1,5 @@
-import type { Food, Servings } from '@prisma/client';
+import type { Food } from '@prisma/client';
+import type { Servings } from '../../types';
 import Counter from './Counter/Counter';
 
 interface NutrimentProps {
