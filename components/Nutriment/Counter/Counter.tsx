@@ -15,7 +15,7 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
 
   useEffect(() => {
     setServing(initialValue ?? '');
-  }, [initialValue]);
+  }, [initialValue, props.date]);
 
   const handleServing = (value: string) => {
     (async () => {
