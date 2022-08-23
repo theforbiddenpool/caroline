@@ -11,7 +11,12 @@ function Nutriment({ data, serving }: NutrimentProps) {
   return (
     <div className="flex bg-zinc-50 p-5">
       <h3 className="flex-grow capitalize">{data.name}</h3>
-      <Counter initialValue={serving?.quantity} total={data.quantity} />
+      <Counter
+        initialValue={serving?.quantity}
+        total={data.quantity}
+        foodId={data.id}
+        date={serving?.date}
+      />
     </div>
   );
 }
