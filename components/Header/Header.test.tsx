@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { SessionProvider } from 'next-auth/react';
 import server from '../../mocks/api';
-import { session as sessionHandlers } from '../../mocks/api/handlers/';
+import { session as sessionHandlers } from '../../mocks/api/handlers';
 import Header from './Header';
 
 describe('Header', () => {
