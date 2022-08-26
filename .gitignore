@@ -36,3 +36,4 @@ yarn-error.log*
 
 # databases
 *.db
+*.db-journal

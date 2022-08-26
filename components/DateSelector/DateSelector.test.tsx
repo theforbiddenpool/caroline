@@ -5,25 +5,31 @@ import DateSelector from './DateSelector';
 
 describe('DateSelector', () => {
   test('renders', () => {
-    render(<DateSelector />);
+    const today = new Date();
 
-    const today = dateUtils.formatDate(new Date());
-    expect(screen.queryByText(today, { exact: false })).toBeInTheDocument();
+    render(<DateSelector date={today} setDate={jest.fn()} />);
+
+    expect(screen.queryByText(dateUtils.formatDate(today), { exact: false }))
+      .toBeInTheDocument();
   });
 
   test('buttons switch the date', async () => {
-    render(<DateSelector />);
+    const today = new Date();
+    const mockFn = jest.fn();
+
+    const { rerender } = render(<DateSelector date={today} setDate={mockFn} />);
     const user = userEvent.setup();
 
-    const today = new Date();
     const previous = dateUtils.getPreviousDate(today);
 
     await user.click(screen.getByRole('button', { name: 'previous' }));
+    expect(mockFn).toHaveBeenCalledWith(previous);
+
+    rerender(<DateSelector date={previous} setDate={mockFn} />);
     expect(screen.queryByText(dateUtils.formatDate(previous), { exact: false }))
       .toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'next' }));
-    expect(screen.queryByText(dateUtils.formatDate(today), { exact: false }))
-      .toBeInTheDocument();
+    expect(mockFn).toHaveBeenCalledWith(today);
   });
 });

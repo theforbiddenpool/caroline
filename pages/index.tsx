@@ -1,9 +1,25 @@
-import { InferGetServerSidePropsType } from 'next';
+import type { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { IconAlertTriangle } from '@tabler/icons';
+import type { Serving } from '../types';
 import { loadFoods } from './api/foods';
-import { Counter, DateSelector, Header } from '../components';
+import { getServings } from '../services/client/servings';
+import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
+  const { data: session, status } = useSession();
+  const [date, setDate] = useState(new Date());
+  const [servings, setServings] = useState<Serving[]>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedServings = await getServings(date);
+      setServings(fetchedServings);
+    })();
+  }, [date]);
+
   return (
     <>
       <Head>
@@ -13,13 +29,22 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
       </Head>
       <div className="flex flex-col items-center pb-8 min-h-screen">
         <Header />
-        <main className="w-3/5 mt-10 bg-gray-100">
-          <DateSelector />
-          {foods?.map((food) => (
-            <div className="flex bg-zinc-50 p-5" key={food.id}>
-              <h3 className="flex-grow capitalize">{food.name}</h3>
-              <Counter total={food.quantity} />
+        <main className="w-3/5 mt-10">
+          {!session && status !== 'loading' && (
+            <div className="px-3 py-5 mb-5 bg-red-400 text-center">
+              <IconAlertTriangle className="inline-block mr-1 align-text-bottom" size={18} />
+              {' '}
+              You&apos;re currently not signed in. No data will be saved!
             </div>
+          )}
+          <DateSelector date={date} setDate={setDate} />
+          {foods?.map((food) => (
+            <Nutriment
+              data={food}
+              date={date}
+              serving={servings?.filter((s) => s.foodId === food.id)[0]}
+              key={food.id}
+            />
           ))}
         </main>
       </div>

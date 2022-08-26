@@ -1,39 +1,56 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Counter from './Counter';
+import { withState } from '../../../mocks/components';
+import CounterInput from './CounterInput';
 
-describe('Counter', () => {
+describe('CounterInput', () => {
   test('renders', () => {
-    render(<Counter total={3} />);
+    const CounterInputWithState = withState(CounterInput, { initialValue: '2' });
+    render(<CounterInputWithState />);
 
-    expect(screen.queryByText(/3/)).toBeInTheDocument();
-    expect(screen.queryByLabelText(/servings/i)).toHaveValue('');
+    const input = screen.queryByLabelText(/servings/i);
+    expect(input).toHaveDisplayValue('2');
+    expect(input).not.toBeDisabled();
+  });
+
+  test('both input and buttons are disabled', () => {
+    const CounterInputWithState = withState(CounterInput, { initialValue: '' });
+    render(<CounterInputWithState disabled />);
+
+    expect(screen.getByLabelText(/servings/i)).toBeDisabled();
+    expect(screen.getByLabelText(/increment/i)).toBeDisabled();
+    expect(screen.getByLabelText(/decrement/i)).toBeDisabled();
   });
 
   test('button increments/decrements value by 0.5', async () => {
-    render(<Counter total={3} />);
+    const CounterInputWithState = withState(CounterInput, { initialValue: '' });
+    render(<CounterInputWithState />);
     const user = userEvent.setup();
 
-    const incrementButton = screen.getByRole('button', { name: 'increment' });
-    const decrementButton = screen.getByRole('button', { name: 'decrement' });
     const input = screen.getByLabelText(/servings/i);
+    const incrementButton = screen.getByLabelText(/increment/i);
+    const decrementButton = screen.getByLabelText(/decrement/i);
 
     await user.click(incrementButton);
     expect(input).toHaveValue('0.5');
+
     await user.click(incrementButton);
     expect(input).toHaveValue('1');
 
     await user.click(decrementButton);
     expect(input).toHaveValue('0.5');
+
     await user.click(decrementButton);
     expect(input).toHaveValue('0');
+
     // doesn't go to negative values
     await user.click(decrementButton);
     expect(input).toHaveValue('0');
   });
 
-  test('input only allows numbers', async () => {
-    render(<Counter total={3} />);
+  test('only allows numbers', async () => {
+    const CounterInputWithState = withState(CounterInput, { initialValue: '' });
+    render(<CounterInputWithState />);
     const user = userEvent.setup();
 
     const input = screen.getByLabelText(/servings/i);
@@ -55,7 +72,8 @@ describe('Counter', () => {
   });
 
   test('when started with a decimal point, automatically appends a 0', async () => {
-    render(<Counter total={3} />);
+    const CounterInputWithState = withState(CounterInput, { initialValue: '' });
+    render(<CounterInputWithState />);
     const user = userEvent.setup();
 
     const input = screen.getByLabelText(/servings/i);
@@ -65,7 +83,8 @@ describe('Counter', () => {
   });
 
   test('keyboard accessibility', async () => {
-    render(<Counter total={3} />);
+    const CounterInputWithState = withState(CounterInput, { initialValue: '' });
+    render(<CounterInputWithState />);
     const user = userEvent.setup();
 
     const input = screen.getByLabelText(/servings/i);
