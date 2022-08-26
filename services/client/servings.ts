@@ -9,7 +9,7 @@ function parseServing(data: object | object[]) {
     id: d.id,
     foodId: d.foodId,
     date: new Date(d.date),
-    quantity: d.quantity ? String(d.quantity) : '',
+    quantity: d.quantity || d.quantity === 0 ? String(d.quantity) : '',
   });
 
   if (Array.isArray(data)) {
