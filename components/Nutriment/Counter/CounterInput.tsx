@@ -71,7 +71,7 @@ function CounterInput({ value, setValue, disabled = false }: CounterInputProps) 
         disabled={disabled}
         onChange={handleChange}
         onKeyDown={handleKeypress}
-        className="w-14 mx-3 text-center border-2 border-gray-900"
+        className="mx-2 text-center bg-transparent w-8 border-b-2 border-black pb-1"
         role="spinbutton"
         aria-label="servings"
         aria-valuenow={value === '' ? 0 : parseFloat(value)}
