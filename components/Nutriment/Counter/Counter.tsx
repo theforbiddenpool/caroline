@@ -41,7 +41,7 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
     <div>
       <CounterInput value={serving} setValue={handleServing} disabled={disabled} />
       <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" aria-label="out of" />
-      <span>{total}</span>
+      <span className={(parseFloat(serving) >= total) ? 'text-green-700' : ''}>{total}</span>
     </div>
   );
 }
