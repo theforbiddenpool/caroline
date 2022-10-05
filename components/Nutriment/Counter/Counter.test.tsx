@@ -67,4 +67,24 @@ describe('Counter', () => {
       expect(input).toHaveDisplayValue('2.');
     });
   });
+
+  test('checkmark is displayed when serving goal is completed', async () => {
+    render(<Counter
+      initialValue={String(servings.beansTwoServings.quantity)}
+      total={foods.beans.quantity}
+      foodId={foods.beans.id}
+      date={new Date()}
+    />);
+    const user = userEvent.setup();
+
+    expect(screen.queryByTestId('counter-ckm')).not.toBeInTheDocument();
+
+    const input = screen.getByLabelText(/servings/i);
+
+    await user.type(input, '{Backspace}3');
+    await waitFor(() => {
+      expect(input).toHaveDisplayValue('3');
+      expect(screen.queryByTestId('counter-ckm')).toBeInTheDocument();
+    });
+  });
 });

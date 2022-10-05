@@ -18,6 +18,10 @@ export const basePut = rest.put('/api/servings', async (req, res, ctx) => {
     return res(ctx.json(servings.beansTwoServings));
   }
 
+  if (json.foodId === 'beans1') {
+    return res(ctx.json(servings.beansThreeServings));
+  }
+
   return res(ctx.status(400));
 });
 

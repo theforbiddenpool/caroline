@@ -22,6 +22,14 @@ export const beansTwoServingsUpdated: Servings = {
   quantity: 1.5,
 };
 
+export const beansThreeServings: Servings = {
+  id: 'cl76eqkra4887pqm0ah5p2se2',
+  userId: john.user.id,
+  foodId: foods.beans.id,
+  date: '2022-08-25T14:10:55.156Z',
+  quantity: 3,
+};
+
 export const berriesZeroServings: Servings = {
   id: 'cl76bmxtw4599pqm0q7xobbod',
   userId: john.user.id,
@@ -44,5 +52,10 @@ export const all: Servings[] = [
 ];
 
 export default {
-  beansTwoServings, beansTwoServingsUpdated, berriesZeroServings, berriesZeroServingsUpdated, all,
+  beansTwoServings,
+  beansTwoServingsUpdated,
+  beansThreeServings,
+  berriesZeroServings,
+  berriesZeroServingsUpdated,
+  all,
 };
