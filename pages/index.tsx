@@ -14,11 +14,15 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const [servings, setServings] = useState<Serving[]>();
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+
     (async () => {
       const fetchedServings = await getServings(date);
       setServings(fetchedServings);
     })();
-  }, [date]);
+  }, [date, session]);
 
   return (
     <>
