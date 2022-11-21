@@ -61,7 +61,7 @@ function CounterInput({ value, setValue, disabled = false }: CounterInputProps) 
 
   return (
     <span>
-      <button type="button" onClick={handleDecrement} aria-label="decrement" disabled={disabled}>
+      <button type="button" onClick={handleDecrement} title="decrement" aria-label="decrement" disabled={disabled}>
         <IconMinus size={13} role="presentation" />
       </button>
       <input
@@ -76,7 +76,7 @@ function CounterInput({ value, setValue, disabled = false }: CounterInputProps) 
         aria-label="servings"
         aria-valuenow={value === '' ? 0 : parseFloat(value)}
       />
-      <button type="button" onClick={handleIncrement} aria-label="increment" disabled={disabled}>
+      <button type="button" onClick={handleIncrement} title="increment" aria-label="increment" disabled={disabled}>
         <IconPlus size={13} role="presentation" />
       </button>
     </span>

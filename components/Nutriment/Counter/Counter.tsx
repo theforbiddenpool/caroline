@@ -43,7 +43,11 @@ function Counter({ initialValue, total, ...props }: CounterProps) {
       <IconMinusVertical size={20} stroke={1.5} className="inline mx-1 rotate-12 -mt-1" role="img" aria-label="out of" />
       <span className={(parseFloat(serving) >= total) ? 'text-green-700' : ''}>{total}</span>
       {parseFloat(serving) >= total
-        && <IconCheck size={20} className="inline ml-2 text-green-700" role="img" aria-label="checkmark icon – serving goal reached" /> }
+        && (
+        <span title="serving goal reached">
+          <IconCheck size={20} className="inline ml-2 text-green-700" role="img" aria-label="checkmark icon – serving goal reached" />
+        </span>
+        ) }
     </div>
   );
 }
