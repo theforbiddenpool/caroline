@@ -22,14 +22,14 @@ describe('DateSelector', () => {
 
     const previous = dateUtils.getPreviousDate(today);
 
-    await user.click(screen.getByRole('button', { name: 'previous' }));
+    await user.click(screen.getByRole('button', { name: 'previous day' }));
     expect(mockFn).toHaveBeenCalledWith(previous);
 
     rerender(<DateSelector date={previous} setDate={mockFn} />);
     expect(screen.queryByText(dateUtils.formatDate(previous), { exact: false }))
       .toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'next' }));
+    await user.click(screen.getByRole('button', { name: 'next day' }));
     expect(mockFn).toHaveBeenCalledWith(today);
   });
 });
