@@ -84,7 +84,7 @@ describe('Counter', () => {
     await user.type(input, '{Backspace}3');
     await waitFor(() => {
       expect(input).toHaveDisplayValue('3');
-      expect(screen.queryByTestId('counter-ckm')).toBeInTheDocument();
+      expect(screen.queryByRole('img', { name: /serving goal reached/i })).toBeInTheDocument();
     });
   });
 });
