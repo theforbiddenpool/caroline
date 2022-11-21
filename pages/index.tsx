@@ -32,7 +32,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
         <main className="w-3/5 mt-10">
           {!session && status !== 'loading' && (
             <div className="px-3 py-5 mb-5 bg-red-400 text-center">
-              <IconAlertTriangle className="inline-block mr-1 align-text-bottom" size={18} />
+              <IconAlertTriangle size={18} className="inline-block mr-1 align-text-bottom" role="presentation" />
               {' '}
               You&apos;re currently not signed in. No data will be saved!
             </div>
