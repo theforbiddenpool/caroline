@@ -4,4 +4,8 @@ module.exports = {
   experimental: {
     newNextLinkBehavior: true,
   },
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
 };
