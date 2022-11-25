@@ -1,16 +1,17 @@
 import type { Session } from 'next-auth';
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';
 
 interface AuthenticatedNavProps extends Required<Pick<Session, 'user'>> {}
 
 export function AuthenticatedNav({ user }: AuthenticatedNavProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="inline-flex">
       <p className="mr-4">
-        Signed in as
-        {' '}
-        {user.name ?? user.email}
+        {t('signed in as', { user: user.name ?? user.email })}
       </p>
       <nav>
         <ul>
@@ -22,7 +23,7 @@ export function AuthenticatedNav({ user }: AuthenticatedNavProps) {
                 signOut();
               }}
             >
-              Logout
+              {t('logout')}
             </Link>
           </li>
         </ul>
