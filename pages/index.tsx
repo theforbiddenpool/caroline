@@ -71,14 +71,14 @@ export const getStaticProps = async (ctx) => {
     return {
       props: {
         foods,
-        ...(await serverSideTranslations(locale, ['translations'])),
+        ...(await serverSideTranslations(locale, ['translations', 'foods'])),
       },
     };
   } catch (err) {
     return {
       props: {
         foods: [],
-        ...(await serverSideTranslations(locale, ['translations'])),
+        ...(await serverSideTranslations(locale, ['translations', 'foods'])),
       },
       notFound: true,
     };

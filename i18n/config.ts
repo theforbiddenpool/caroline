@@ -7,13 +7,15 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   resources: {
     en: {
-      translations: locales.en,
+      translations: locales.en.translations,
+      foods: locales.en.foods,
     },
     pt: {
-      translations: locales.pt,
+      translations: locales.pt.translations,
+      foods: locales.pt.foods,
     },
   },
-  ns: ['translations'],
+  ns: ['translations', 'foods'],
   defaultNS: 'translations',
   debug: process.env.NODE_ENV === 'development',
 });
