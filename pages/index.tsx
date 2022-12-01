@@ -4,6 +4,7 @@ import { IconAlertTriangle } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import type { Serving } from '../types';
 import { Nutriment, DateSelector, Header } from '../components';
 import { loadFoods } from './api/foods';
@@ -55,13 +56,32 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps = async () => {
+/**
+ * This ignore is necessary, because ctx must not have any type defined. Otherwise,
+ * InferGetServerSidePropsType in the above component will not work. The resulting type
+ * of, in this case, the foods prop will be never.
+ */
+// @ts-ignore
+export const getStaticProps = async (ctx) => {
+  const { locale } = ctx;
+
   try {
     const foods = await loadFoods();
 
-    return { props: { foods } };
+    return {
+      props: {
+        foods,
+        ...(await serverSideTranslations(locale, ['translations'])),
+      },
+    };
   } catch (err) {
-    return { props: { foods: [] }, notFound: true };
+    return {
+      props: {
+        foods: [],
+        ...(await serverSideTranslations(locale, ['translations'])),
+      },
+      notFound: true,
+    };
   }
 };
 
