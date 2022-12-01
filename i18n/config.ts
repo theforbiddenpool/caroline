@@ -9,12 +9,15 @@ i18n.use(initReactI18next).init({
     en: {
       translations: locales.en,
     },
+    pt: {
+      translations: locales.pt,
+    },
   },
   ns: ['translations'],
   defaultNS: 'translations',
   debug: process.env.NODE_ENV === 'development',
 });
 
-i18n.languages = ['en'];
+i18n.languages = ['en', 'pt'];
 
 export default i18n;
