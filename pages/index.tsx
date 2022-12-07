@@ -1,15 +1,19 @@
 import type { InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import { IconAlertTriangle } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { IconAlertTriangle } from '@tabler/icons';
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import type { Serving } from '../types';
+import { Nutriment, DateSelector, Header } from '../components';
 import { loadFoods } from './api/foods';
 import { getServings } from '../services/client/servings';
-import { Nutriment, DateSelector, Header } from '../components';
 
 function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const { data: session, status } = useSession();
+  const { t } = useTranslation();
+
   const [date, setDate] = useState(new Date());
   const [servings, setServings] = useState<Serving[]>();
 
@@ -34,7 +38,7 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
             <div className="px-3 py-5 mb-5 bg-red-400 text-center">
               <IconAlertTriangle size={18} className="inline-block mr-1 align-text-bottom" role="presentation" />
               {' '}
-              You&apos;re currently not signed in. No data will be saved!
+              {t('you\'re currently not signed in')}
             </div>
           )}
           <DateSelector date={date} setDate={setDate} />
@@ -52,13 +56,32 @@ function Home({ foods }: InferGetServerSidePropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps = async () => {
+/**
+ * This ignore is necessary, because ctx must not have any type defined. Otherwise,
+ * InferGetServerSidePropsType in the above component will not work. The resulting type
+ * of, in this case, the foods prop will be never.
+ */
+// @ts-ignore
+export const getStaticProps = async (ctx) => {
+  const { locale } = ctx;
+
   try {
     const foods = await loadFoods();
 
-    return { props: { foods } };
+    return {
+      props: {
+        foods,
+        ...(await serverSideTranslations(locale, ['translations', 'foods'])),
+      },
+    };
   } catch (err) {
-    return { props: { foods: [] }, notFound: true };
+    return {
+      props: {
+        foods: [],
+        ...(await serverSideTranslations(locale, ['translations', 'foods'])),
+      },
+      notFound: true,
+    };
   }
 };
 

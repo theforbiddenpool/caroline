@@ -1,0 +1,6 @@
+{
+  "signed in as": "Signed in as {{user}}",
+  "sign in": "Sign In",
+  "logout": "Logout",
+  "you're currently not signed in": "You're currently not signed in. No data will be saved!"
+}

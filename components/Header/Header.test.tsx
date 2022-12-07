@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { SessionProvider } from 'next-auth/react';
 import server from '../../mocks/api';
 import { session as sessionHandlers } from '../../mocks/api/handlers';
 import Header from './Header';
+import { AppWithSessionAndTrans } from '../../mocks/components';
 
 describe('Header', () => {
   test('renders when logged in', async () => {
     render(
-      <SessionProvider session={undefined}>
+      <AppWithSessionAndTrans>
         <Header />
-      </SessionProvider>,
+      </AppWithSessionAndTrans>,
     );
 
     expect(screen.queryByText(/caroline/i)).toBeInTheDocument();
@@ -24,9 +24,9 @@ describe('Header', () => {
     server.use(sessionHandlers.noName);
 
     render(
-      <SessionProvider session={undefined}>
+      <AppWithSessionAndTrans>
         <Header />
-      </SessionProvider>,
+      </AppWithSessionAndTrans>,
     );
 
     await waitFor(() => {
@@ -38,9 +38,9 @@ describe('Header', () => {
     server.use(sessionHandlers.loggedOut);
 
     render(
-      <SessionProvider session={undefined}>
+      <AppWithSessionAndTrans>
         <Header />
-      </SessionProvider>,
+      </AppWithSessionAndTrans>,
     );
 
     await waitFor(() => {
