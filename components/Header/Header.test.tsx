@@ -2,14 +2,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 import server from '../../mocks/api';
 import { session as sessionHandlers } from '../../mocks/api/handlers';
 import Header from './Header';
-import { AppWithSession } from '../../mocks/components';
+import { AppWithSessionAndTrans } from '../../mocks/components';
 
 describe('Header', () => {
   test('renders when logged in', async () => {
     render(
-      <AppWithSession>
+      <AppWithSessionAndTrans>
         <Header />
-      </AppWithSession>,
+      </AppWithSessionAndTrans>,
     );
 
     expect(screen.queryByText(/caroline/i)).toBeInTheDocument();
@@ -24,9 +24,9 @@ describe('Header', () => {
     server.use(sessionHandlers.noName);
 
     render(
-      <AppWithSession>
+      <AppWithSessionAndTrans>
         <Header />
-      </AppWithSession>,
+      </AppWithSessionAndTrans>,
     );
 
     await waitFor(() => {
@@ -38,9 +38,9 @@ describe('Header', () => {
     server.use(sessionHandlers.loggedOut);
 
     render(
-      <AppWithSession>
+      <AppWithSessionAndTrans>
         <Header />
-      </AppWithSession>,
+      </AppWithSessionAndTrans>,
     );
 
     await waitFor(() => {
