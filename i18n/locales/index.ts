@@ -3,13 +3,18 @@ import enFoods from './en/foods.json';
 import ptTrans from './pt/translations.json';
 import ptFoods from './pt/foods.json';
 
+export const en = {
+  translations: enTrans,
+  foods: enFoods,
+};
+
+export const pt = {
+  translations: ptTrans,
+  foods: ptFoods,
+
+};
+
 export default {
-  en: {
-    translations: enTrans,
-    foods: enFoods,
-  },
-  pt: {
-    translations: ptTrans,
-    foods: ptFoods,
-  },
+  en,
+  pt,
 };
